@@ -13,7 +13,7 @@ RSpec.describe SessionsController do
     context 'with valid credentials' do
       it 'it sets session[:user_id] to logged in user' do
         user = create(:user)
-        
+
         post :create, params: { session: { email: user.email, password: "password" } }
 
         expect(assigns[:user]).to eq(user)
@@ -41,6 +41,7 @@ RSpec.describe SessionsController do
       delete :destroy, params: {id: user.id}
 
       expect(session[:user_id]).to be(nil)
+      expect(response).to redirect_to(new_session_path)
     end
   end
 end
