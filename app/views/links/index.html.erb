@@ -1,1 +1,12 @@
 <%= link_to "Log Out", session_path(current_user), method: :delete%>
+
+<div id="links">
+  <% current_user.links.each do |link| %>
+    <div class='link'>
+      <p class='link-title'>Title: <%= link.title %></p>
+      <p class='link-url'>URL: <%= link_to link.url %></p>
+      <p class='read-status'>Read?: <%= link.read %></p>
+      <button>Mark as Read</button><button>Edit</button>
+    </div>
+  <% end %>
+</div>

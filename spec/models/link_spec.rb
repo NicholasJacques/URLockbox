@@ -18,4 +18,8 @@ RSpec.describe Link do
     it { expect(link).to validate_presence_of(:url) }
     it { expect(link).to validate_presence_of(:title) }
   end
+
+  describe 'ActiveRecord associations' do
+    it { expect(link).to belong_to(:user) }
+  end
 end

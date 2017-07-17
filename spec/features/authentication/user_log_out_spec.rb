@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe 'User log out process' do
   scenario 'as an authenticated user visiting the index page' do
     user = create(:user)
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    allow_any_instance_of(ApplicationController)
+      .to receive(:current_user)
+      .and_return(user)
 
     visit root_path
 

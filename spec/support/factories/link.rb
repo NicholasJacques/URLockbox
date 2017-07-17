@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :link do
     title
     url
+    user
   end
 
   sequence :title do |n|
