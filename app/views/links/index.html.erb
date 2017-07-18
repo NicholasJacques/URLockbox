@@ -1,6 +1,12 @@
 <%= link_to "Log Out", session_path(current_user), method: :delete%>
 
-<div id="links">
+<form class='new-link'>
+  URL: <input type='text', name='link[url]'></input>
+  Title: <input type='text', name='link[title]'></input>
+  <input type="submit" value="Add Link">
+</form>
+
+<div id='links'>
   <% current_user.links.each do |link| %>
     <div class='link'>
       <p class='link-title'>Title: <%= link.title %></p>
