@@ -32,4 +32,27 @@ RSpec.describe 'Submitting a new link', js: true do
       expect(user.links.last.read).to eq(false)
     end
   end
+
+  context 'with invalid inputs' do
+    scenario 'missing title' do
+      user = create(:user)
+      url = 'http://www.google.com'
+      allow_any_instance_of(ApplicationController)
+        .to receive(:current_user)
+        .and_return(user)
+
+      visit root_path
+
+      fill_in('link[url]', with: url)
+      click_on 'Add Link'
+
+      expect(current_path).to eq(root_path)
+
+      within('.errors') do
+        expect(page).to have_css('p.error', text: "Title can't be blank.")
+      end
+
+      expect(user.links.count).to eq(0)
+    end
+  end
 end

@@ -9,7 +9,7 @@ class Api::V1::LinksController < ApplicationController
                       locals: { link: link },
                       layout: false
     else
-      render json: { errors: link.errors.full_messages }, status: 500
+      render json: { errors: link.errors.full_messages, status: 500 }
     end
   end
 
