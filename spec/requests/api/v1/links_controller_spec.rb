@@ -13,15 +13,11 @@ RSpec.describe 'Links API' do
         new_title = 'Google'
 
         post '/api/v1/links', params: { link: { url: new_url, title: new_title } }
-        returned_link = JSON.parse(response.body)
+        returned_markup = response.body
 
+        expect(returned_markup).to include(new_url)
+        expect(returned_markup).to include(new_title)
         expect(response).to be_success
-        expect(returned_link).to be_a(Hash)
-        expect(returned_link['url']).to eq(new_url)
-        expect(returned_link['title']).to eq(new_title)
-        expect(returned_link['user_id']).to eq(user.id)
-        expect(returned_link['read']).to eq(false)
-        expect(returned_link).to have_key('id')
         expect(user.links.count).to eq(1)
       end
     end
@@ -78,7 +74,7 @@ RSpec.describe 'Links API' do
       end
 
       scenario 'no authenticated user' do
-        user = create(:user)
+        create(:user)
 
         new_url = 'https://www.google.com'
         new_title = 'Good Title'

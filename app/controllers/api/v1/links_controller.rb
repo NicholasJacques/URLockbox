@@ -2,12 +2,14 @@ class Api::V1::LinksController < ApplicationController
   before_action :authenticate, only: [:create]
 
   def create
-    @link = current_user.links.new(new_link_params)
+    link = current_user.links.new(new_link_params)
 
-    if @link.save
-      render json: @link
+    if link.save
+      render partial: 'links/link',
+                      locals: { link: link },
+                      layout: false
     else
-      render json: { errors: @link.errors.full_messages }, status: 500
+      render json: { errors: link.errors.full_messages }, status: 500
     end
   end
 
