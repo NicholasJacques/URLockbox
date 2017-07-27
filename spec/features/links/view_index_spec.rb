@@ -11,11 +11,11 @@ RSpec.describe 'viewing the links index as an authenticated user' do
         .and_return(user)
 
       visit links_path
-      save_and_open_page
+
       within('.link:first') do
         expect(page).to have_css('p.link-title', text: "Title: #{link_2.title}")
         expect(page).to have_css('p.link-url', text: "URL: #{link_2.url}")
-        expect(page).to have_css('p.read-status', text: "Read?: #{link_2.read}")
+        expect(page).to have_css('p.read-status', text: "Read? #{link_2.read}")
         expect(page).to have_button('Mark as Read')
         expect(page).to have_button('Edit')
       end
@@ -23,7 +23,7 @@ RSpec.describe 'viewing the links index as an authenticated user' do
       within('.link:last') do
         expect(page).to have_css('p.link-title', text: "Title: #{link_1.title}")
         expect(page).to have_css('p.link-url', text: "URL: #{link_1.url}")
-        expect(page).to have_css('p.read-status', text: "Read?: #{link_1.read}")
+        expect(page).to have_css('p.read-status', text: "Read? #{link_1.read}")
         expect(page).to have_button('Mark as Read')
         expect(page).to have_button('Edit')
       end

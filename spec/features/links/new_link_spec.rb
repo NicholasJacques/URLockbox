@@ -24,7 +24,7 @@ RSpec.describe 'Submitting a new link', js: true do
       within('.link') do
         expect(page).to have_css('p.link-title', text: "Title: #{title}")
         expect(page).to have_css('p.link-url', text: "URL: #{url}")
-        expect(page).to have_css('p.read-status', text: 'Read?: false')
+        expect(page).to have_css('p.read-status', text: 'Read? false')
         expect(page).to have_button('Mark as Read')
         expect(page).to have_button('Edit')
       end
