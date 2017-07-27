@@ -90,7 +90,7 @@ RSpec.describe 'Editing a link' do
 
       expect(current_path).to eq(edit_link_path(link_2))
       within('.errors') do
-        expect(page).to have_content("Url is invalid")
+        expect(page).to have_content('Url is invalid')
       end
     end
   end
