@@ -48,4 +48,23 @@ RSpec.describe 'Editing a link' do
       expect(user.links.count).to eq(2)
     end
   end
+
+  context 'with invalid inputs' do
+    scenario 'missing title', authenticated: true do
+      link_1, link_2 = user.links
+
+      url = 'http://www.newurl.com'
+
+      visit edit_link_path(link_2)
+
+      fill_in('link[title]', with: '')
+      fill_in('link[url]', with: url)
+      click_on 'Update Link'
+
+      expect(current_path).to eq(edit_link_path(link_2))
+      within('.errors') do
+        expect(page).to have_content("Title can't be blank")
+      end
+    end
+  end
 end
