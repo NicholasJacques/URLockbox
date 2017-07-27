@@ -61,6 +61,19 @@ RSpec.describe 'Links API' do
         expect(parsed_response['errors']).to include("Url can't be blank")
       end
 
+      scenario 'invalid url', authenticated: true do
+        new_url = 'badurl.com'
+        new_title = 'Google'
+
+        post '/api/v1/links', params: { link: { url: new_url, title: new_title } }
+        parsed_response = JSON.parse(response.body)
+
+        expect(parsed_response).to be_a(Hash)
+        expect(parsed_response['errors']).to be_an(Array)
+        expect(parsed_response['errors'].length).to be(1)
+        expect(parsed_response['errors']).to include('Url is invalid')
+      end
+
       scenario 'no authenticated user' do
         new_url = 'https://www.google.com'
         new_title = 'Good Title'

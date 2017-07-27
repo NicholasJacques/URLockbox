@@ -17,6 +17,8 @@ RSpec.describe Link do
   describe 'ActiveModel validations' do
     it { expect(link).to validate_presence_of(:url) }
     it { expect(link).to validate_presence_of(:title) }
+    it { expect(link).to allow_value('http://www.google.com').for(:url) }
+    it { expect(link).to_not allow_value('badurl.com').for(:url) }
   end
 
   describe 'ActiveRecord associations' do
