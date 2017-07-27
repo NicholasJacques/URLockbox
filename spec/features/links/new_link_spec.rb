@@ -94,7 +94,7 @@ RSpec.describe 'Submitting a new link', js: true do
 
       expect(current_path).to eq(root_path)
       within('.errors') do
-        expect(page).to have_css('p.error', text: "'bad url' is an invalid url")
+        expect(page).to have_css('p.error', text: "Url is invalid.")
       end
     end
   end
