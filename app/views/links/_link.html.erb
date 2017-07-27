@@ -1,4 +1,4 @@
-<div class='link' data-link-id=<%= link.id %>>
+<div class="link <%= "read" if link.read %>" data-link-id=<%= link.id %>>
   <p class='link-title'>Title: <%= link.title %></p>
   <p class='link-url'>URL: <%= link_to link.url %></p>
   <p class='read-status'>Read? <%= link.read %></p>
