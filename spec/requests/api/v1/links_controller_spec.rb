@@ -1,14 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Links API' do
+  let(:user) { create(:user)}
+
+  before(:each, authenticated: true) do
+    allow_any_instance_of(ApplicationController)
+      .to receive(:current_user)
+      .and_return(user)
+  end
+
   describe 'POST#create' do
     context 'with valid params' do
-      it 'creates a new link associated with the current user' do
-        user = create(:user)
-        allow_any_instance_of(ApplicationController)
-          .to receive(:current_user)
-          .and_return(user)
-
+      it 'creates a new link associated with the current user', authenticated: true do
         new_url = 'https://www.google.com'
         new_title = 'Google'
 
@@ -23,12 +26,7 @@ RSpec.describe 'Links API' do
     end
 
     context 'with invalid params' do
-      scenario 'missing title' do
-        user = create(:user)
-        allow_any_instance_of(ApplicationController)
-          .to receive(:current_user)
-          .and_return(user)
-
+      scenario 'missing title', authenticated: true do
         new_url = 'https://www.google.com'
 
         post '/api/v1/links', params: { link: { url: new_url, title: nil } }
@@ -40,12 +38,7 @@ RSpec.describe 'Links API' do
         expect(parsed_response['errors'].first).to eq("Title can't be blank")
       end
 
-      scenario 'missing url' do
-        user = create(:user)
-        allow_any_instance_of(ApplicationController)
-          .to receive(:current_user)
-          .and_return(user)
-
+      scenario 'missing url', authenticated: true do
         new_title = 'Good Title'
 
         post '/api/v1/links', params: { link: { url: nil, title: new_title } }
@@ -57,12 +50,7 @@ RSpec.describe 'Links API' do
         expect(parsed_response['errors'].first).to eq("Url can't be blank")
       end
 
-      scenario 'missing title & url' do
-        user = create(:user)
-        allow_any_instance_of(ApplicationController)
-          .to receive(:current_user)
-          .and_return(user)
-
+      scenario 'missing title & url', authenticated: true do
         post '/api/v1/links', params: { link: { url: nil, title: nil } }
         parsed_response = JSON.parse(response.body)
 
@@ -74,8 +62,6 @@ RSpec.describe 'Links API' do
       end
 
       scenario 'no authenticated user' do
-        create(:user)
-
         new_url = 'https://www.google.com'
         new_title = 'Good Title'
 
@@ -85,7 +71,7 @@ RSpec.describe 'Links API' do
         expect(parsed_response).to be_a(Hash)
         expect(parsed_response['errors']).to be_an(Array)
         expect(parsed_response['errors'].length).to be(1)
-        expect(parsed_response['errors'].first).to eq("Must be logged in to create a link")
+        expect(parsed_response['errors'].first).to eq('Must be logged in to create a link')
       end
     end
   end
