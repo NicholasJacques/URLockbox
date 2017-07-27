@@ -81,5 +81,21 @@ RSpec.describe 'Submitting a new link', js: true do
       end
       expect(user.links.count).to eq(0)
     end
+
+    scenario 'invalid url', authenticated: true do
+      title = "New title"
+      url = "bad url"
+
+      visit root_path
+
+      fill_in('link[title]', with: title)
+      fill_in('link[url]', with: url)
+      click_on 'Add Link'
+
+      expect(current_path).to eq(root_path)
+      within('.errors') do
+        expect(page).to have_css('p.error', text: "'bad url' is an invalid url")
+      end
+    end
   end
 end
