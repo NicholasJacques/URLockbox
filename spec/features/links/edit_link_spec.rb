@@ -58,12 +58,39 @@ RSpec.describe 'Editing a link' do
       visit edit_link_path(link_2)
 
       fill_in('link[title]', with: '')
-      fill_in('link[url]', with: url)
       click_on 'Update Link'
 
       expect(current_path).to eq(edit_link_path(link_2))
       within('.errors') do
         expect(page).to have_content("Title can't be blank")
+      end
+    end
+
+    scenario 'missing title', authenticated: true do
+      link_1, link_2 = user.links
+
+      visit edit_link_path(link_2)
+
+      fill_in('link[url]', with: '')
+      click_on 'Update Link'
+
+      expect(current_path).to eq(edit_link_path(link_2))
+      within('.errors') do
+        expect(page).to have_content("Url can't be blank")
+      end
+    end
+
+    scenario 'invalid url', authenticated: true do
+      link_1, link_2 = user.links
+
+      visit edit_link_path(link_2)
+
+      fill_in('link[url]', with: 'invalidurl')
+      click_on 'Update Link'
+
+      expect(current_path).to eq(edit_link_path(link_2))
+      within('.errors') do
+        expect(page).to have_content("Url is invalid")
       end
     end
   end
