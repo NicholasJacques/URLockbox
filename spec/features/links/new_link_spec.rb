@@ -1,14 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe 'Submitting a new link', js: true do
-  context 'with valid inputs' do
-    scenario 'user adds a new link to their bookmarks' do
-      user = create(:user)
-      title = 'new title'
-      url = 'http://www.google.com'
+  let(:user) { create(:user) }
+
+  before(:each, authenticated: true) do
       allow_any_instance_of(ApplicationController)
         .to receive(:current_user)
         .and_return(user)
+  end
+
+
+  context 'with valid inputs' do
+    scenario 'user adds a new link to their bookmarks', authenticated: true do
+      title = 'new title'
+      url = 'http://www.google.com'
 
       visit root_path
 
@@ -33,13 +38,9 @@ RSpec.describe 'Submitting a new link', js: true do
     end
   end
 
-  context 'with invalid inputs' do
+  context 'with invalid inputs', authenticated: true do
     scenario 'missing title' do
-      user = create(:user)
       url = 'http://www.google.com'
-      allow_any_instance_of(ApplicationController)
-        .to receive(:current_user)
-        .and_return(user)
 
       visit root_path
 
@@ -47,11 +48,37 @@ RSpec.describe 'Submitting a new link', js: true do
       click_on 'Add Link'
 
       expect(current_path).to eq(root_path)
-
       within('.errors') do
         expect(page).to have_css('p.error', text: "Title can't be blank.")
       end
+      expect(user.links.count).to eq(0)
+    end
 
+    scenario 'missing url' do
+      title = 'new title'
+
+      visit root_path
+
+      fill_in('link[title]', with: title)
+      click_on 'Add Link'
+
+      expect(current_path).to eq(root_path)
+      within('.errors') do
+        expect(page).to have_css('p.error', text: "Url can't be blank.")
+      end
+      expect(user.links.count).to eq(0)
+    end
+
+    scenario 'missing url and title', authenticated: true do
+      visit root_path
+
+      click_on 'Add Link'
+
+      expect(current_path).to eq(root_path)
+      within('.errors') do
+        expect(page).to have_css('p.error', text: "Url can't be blank.")
+        expect(page).to have_css('p.error', text: "Title can't be blank.")
+      end
       expect(user.links.count).to eq(0)
     end
   end
