@@ -14,7 +14,7 @@ RSpec.describe 'can mark links as unread', js: true do
     link_2.update_attribute(:read, true)
 
     visit links_path
-    binding.pry
+
     within first('.link') do
       expect(page).to have_text('true')
       click_on 'Mark as Unread'

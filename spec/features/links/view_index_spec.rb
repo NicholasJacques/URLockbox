@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'viewing the links index at an authenticated user' do
+RSpec.describe 'viewing the links index as an authenticated user' do
   context 'as a user with previously submitted links' do
     it "lists all that user's links" do
       user = create(:user_with_links)
@@ -11,7 +11,7 @@ RSpec.describe 'viewing the links index at an authenticated user' do
         .and_return(user)
 
       visit links_path
-
+      save_and_open_page
       within('.link:first') do
         expect(page).to have_css('p.link-title', text: "Title: #{link_2.title}")
         expect(page).to have_css('p.link-url', text: "URL: #{link_2.url}")
