@@ -1,8 +1,3 @@
-$( document ).ready(function(){
-  $("body").on("click", ".mark-as-read", { read: true }, updateLinkStatus);
-  $("body").on("click", ".mark-as-unread", { read: false }, updateLinkStatus);  
-})
-
 function updateLinkStatus(e) {
   e.preventDefault();
 
@@ -21,7 +16,9 @@ function updatePageLinkStatus(link) {
   $(`.link[data-link-id=${link.id}]`)
     .find(".read-status")
     .text("Read? " + link.read);
-  $(`.link[data-link-id=${link.id}]`).toggleClass('read')
+
+  $(`.link[data-link-id=${link.id}]`).toggleClass('read');
+  
   updateReadButton(link);
 }
 
@@ -34,3 +31,8 @@ function updateReadButton(link) {
 function displayFailure(failureData){
   console.log("FAILED attempt to update Link: " + failureData.responseText);
 }
+
+$( document ).ready(function(){
+  $("body").on("click", ".mark-as-read", { read: true }, updateLinkStatus);
+  $("body").on("click", ".mark-as-unread", { read: false }, updateLinkStatus);  
+})
