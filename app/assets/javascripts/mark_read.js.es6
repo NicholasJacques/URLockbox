@@ -26,7 +26,7 @@ function updatePageLinkStatus(link) {
 function updateHotReads(link) {
   $.ajax({
     type: "POST",
-    url: "https://ndj-hot-reads.herokuapp.com//api/v1/reads",
+    url: "https://ndj-hot-reads.herokuapp.com/api/v1/reads",
     data: {link: link},
   }).then(logResult)
     .fail(displayFailure);
