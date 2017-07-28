@@ -32,7 +32,7 @@ function displayFailure(failureData){
   console.log("FAILED attempt to update Link: " + failureData.responseText);
 }
 
-$( document ).ready(function(){
+$( document ).ready(function() {
   $("body").on("click", ".mark-as-read", { read: true }, updateLinkStatus);
   $("body").on("click", ".mark-as-unread", { read: false }, updateLinkStatus);  
 })
