@@ -20,6 +20,20 @@ function updatePageLinkStatus(link) {
   $(`.link[data-link-id=${link.id}]`).toggleClass('read');
   
   updateReadButton(link);
+  updateHotReads(link)
+}
+
+function updateHotReads(link) {
+  $.ajax({
+    type: "POST",
+    url: "https://ndj-hot-reads.herokuapp.com//api/v1/reads",
+    data: {link: link},
+  }).then(logResult)
+    .fail(displayFailure);
+}
+
+function logResult(data) {
+  console.log(data)
 }
 
 function updateReadButton(link) {
