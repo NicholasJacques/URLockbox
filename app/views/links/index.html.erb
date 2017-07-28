@@ -1,13 +1,27 @@
 <%= link_to "Log Out", session_path(current_user), method: :delete%>
 
+<hr>
+
 <form class='new-link'>
+  <h3>Add a Link:</h3>
   URL: <input type='text', name='link[url]'></input>
   Title: <input type='text', name='link[title]'></input>
   <input type="submit" value="Add Link", id="submit-link">
 </form>
+
+<hr>
+
+<div class='filters'>
+  <h5>Filter Links:</h5>
+  Search: <input type='text', name='search', id="search-filter"></input>
+</div>
+
+<hr>
 
 <div id='links'>
   <% current_user.links.order('created_at DESC').each do |link| %>
     <%= render partial: 'link', locals: { link: link } %>
   <% end %>
 </div>
+
+
