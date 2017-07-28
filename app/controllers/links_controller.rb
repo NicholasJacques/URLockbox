@@ -2,6 +2,7 @@ class LinksController < ApplicationController
   before_action :authorize
 
   def index
+    @links = current_user.links.order('created_at DESC')
   end
 
   def edit

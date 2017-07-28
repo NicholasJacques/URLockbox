@@ -22,7 +22,6 @@ function updatePageLinkStatus(link) {
   if (link.read) {
     updateHotReads(link)
   }
-
   updateReadButton(link);
 }
 

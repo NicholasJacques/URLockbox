@@ -21,7 +21,7 @@
 <hr>
 
 <div id='links'>
-  <% current_user.links.order('created_at DESC').each do |link| %>
+  <% @links.each do |link| %>
     <%= render partial: 'link', locals: { link: link } %>
   <% end %>
 </div>
