@@ -10,15 +10,13 @@ function searchLinks(query) {
     let linkUrl = $(this).data('link-url').toLowerCase()
     let linkTitle = $(this).data('link-title').toLowerCase()
 
-    return linkUrl.includes(query) ||linkTitle.includes(query)
-  })
-  .show()
-  .end()
-  .filter(':visible')
-  .filter(function() {
+    return linkUrl.includes(query) || linkTitle.includes(query)
+  }).show()
+
+  $('.link').not(function() {
     let linkUrl = $(this).data('link-url').toLowerCase()
     let linkTitle = $(this).data('link-title').toLowerCase()
 
-    return !linkUrl.includes(query) && !linkTitle.includes(query)
+    return linkUrl.includes(query) || linkTitle.includes(query)
   }).fadeOut();
 }
