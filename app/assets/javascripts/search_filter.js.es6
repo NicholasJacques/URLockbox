@@ -1,10 +1,3 @@
-$( document ).ready(function(){
-  $('#search-filter').keyup( function (data) {
-    let query = data.currentTarget.value.toLowerCase()
-    searchLinks(query)
-  })  
-})
-
 function searchLinks(query) {
   $('.link').filter(function() {
     let linkUrl = $(this).data('link-url').toLowerCase()
@@ -20,3 +13,10 @@ function searchLinks(query) {
     return linkUrl.includes(query) || linkTitle.includes(query)
   }).fadeOut();
 }
+
+$( document ).ready(function(){
+  $('#search-filter').keyup( function (data) {
+    let query = data.currentTarget.value.toLowerCase()
+    searchLinks(query)
+  })  
+})
