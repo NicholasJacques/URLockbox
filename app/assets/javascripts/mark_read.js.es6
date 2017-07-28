@@ -19,8 +19,11 @@ function updatePageLinkStatus(link) {
 
   $(`.link[data-link-id=${link.id}]`).toggleClass('read');
   
+  if (link.read) {
+    updateHotReads(link)
+  }
+
   updateReadButton(link);
-  updateHotReads(link)
 }
 
 function updateHotReads(link) {
